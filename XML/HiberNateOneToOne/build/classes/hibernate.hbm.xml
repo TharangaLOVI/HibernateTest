@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="hibernateonetoone.models.Address" >
+        
+        <id column="id" name="id">
+            <generator class="increment"/>
+        </id>
+        <property column="city" name="city" type="string"/>
+        <property column="state" name="state" type="string"/>
+        <property column="street" name="street" type="string"/>
+        <property column="zipcode" name="zipcode" type="string"/>
+        <one-to-one name="employee" class="hibernateonetoone.models.Employee" constrained="true" >
+            <!-- constrained="true" Address can't exists without Employee --> 
+        </one-to-one>
+        
+        
+    </class>
+    
+    <class name="hibernateonetoone.models.Employee" >
+        
+        <id column="id" name="id">
+            <generator class="increment"/>
+        </id>
+        <property column="firstName" name="firstName" type="string"/>
+        <property column="lastName" name="lastName" type="string"/>
+        <property column="salary" name="salary" type="integer"/>
+        
+    </class>
+</hibernate-mapping>

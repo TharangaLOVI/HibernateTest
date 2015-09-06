@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+		"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	
+	<session-factory>
+		<!-- DB connection setting -->
+        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+       	<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/hibernate_ex</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.password">root</property>
+        
+        <property name="connection.pool_size">1</property>
+        
+        <!-- Specify SQL language ->(mysql,orcel,pastgres) for this mysql -->
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        
+        <property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
+        
+        <property name="show_sql">true</property>
+        
+        <!--  drop and recreate -->
+        <!-- <property name="hbm2ddl.auto">create</property> --> 
+        
+        <!-- if not exists the table ->create and insert data 
+        	if exists -> insert new row
+        -->
+        <property name="hbm2ddl.auto"><!--update--> create</property>
+        
+        <!-- Mapping path to java model -->
+        <mapping class="com.hibernate.OneToMeny.models.Vehicle" />
+        <mapping class="com.hibernate.OneToMeny.models.User" />
+       
+    </session-factory>
+	
+</hibernate-configuration>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="hibernateonetomany.models.Employee" >
+        
+        <id column="id" name="id">
+            <generator class="increment"/>
+        </id>
+        <property column="firstName" name="firstName" type="string" not-null="true" unique="true"/>
+        <property column="lastName" name="lastName" type="string"/>
+        <property column="salary" name="salary" type="integer"/>
+        
+        <!-- lazy="true" lazy initialization - Only init first level properties of the Entity  -->
+        <!-- 
+            inverse="true" it means which side is responsible to take care of the relationship
+            
+            if inverse="true" 
+                Address is the relationship owner
+            
+            if inverse="false" (default)
+                Employee is the relationship owner
+                
+            http://www.mkyong.com/hibernate/inverse-true-example-and-explanation/
+        -->
+        
+        <!-- 
+            Fetching Strategies
+            1. fetch-“join” = Disable the lazy loading, always load all the collections and entities.
+            2. fetch-“select” (default) = Lazy load all the collections and entities.
+            3. batch-size=”N” = Fetching up to ‘N’ collections or entities, *Not record*.
+            4. fetch-“subselect” = Group its collection into a sub select statement.
+        -->
+        <set name="addresses" inverse="true" lazy="true">
+            <key>
+                <column name="EMP_ID" not-null="true" />
+            </key>
+            <one-to-many class="hibernateonetomany.models.Address" />
+        </set>
+    </class>
+    
+    <class name="hibernateonetomany.models.Address" >
+        
+        <id column="id" name="id">
+            <generator class="increment"/>
+        </id>
+        <property column="city" name="city" type="string"/>
+        <property column="state" name="state" type="string"/>
+        <property column="street" name="street" type="string"/>
+        <property column="zipcode" name="zipcode" type="string"/>
+        <many-to-one name="employee" class="hibernateonetomany.models.Employee" >
+            <column name="EMP_ID" not-null="true" />
+        </many-to-one>
+        
+    </class>
+</hibernate-mapping>

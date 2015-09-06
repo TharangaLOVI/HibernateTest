@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="hibernatemanytomany.models.Employee" >
+        
+        <id column="id" name="id">
+            <generator class="increment"/>
+        </id>
+        <property column="firstName" name="firstName" type="string" not-null="true" unique="true"/>
+        <property column="lastName" name="lastName" type="string"/>
+        <property column="salary" name="salary" type="integer"/>
+        
+        <set name="addresses" table="EMPLOYEE_ADDRESS" 
+        	inverse="false" lazy="false" cascade="all" >
+            <key>
+                <column name="EMP_ID" not-null="true" />
+            </key>
+            <many-to-many entity-name="hibernatemanytomany.models.Address">
+                <column name="ADDRESS_ID" not-null="true" />
+            </many-to-many>
+        </set>
+    </class>
+    
+    <class name="hibernatemanytomany.models.Address" >
+        
+        <id column="id" name="id">
+            <generator class="increment"/>
+        </id>
+        <property column="city" name="city" type="string"/>
+        <property column="state" name="state" type="string"/>
+        <property column="street" name="street" type="string"/>
+        <property column="zipcode" name="zipcode" type="string"/>
+        
+        
+        <set name="employees" table="EMPLOYEE_ADDRESS" 
+        	inverse="true" lazy="false" fetch="select" cascade="all" >
+            <key>
+                <column name="ADDRESS_ID" not-null="true" />
+            </key>
+            <many-to-many entity-name="hibernatemanytomany.models.Employee">
+                <column name="EMP_ID" not-null="true" />
+            </many-to-many>
+        </set>
+    </class>
+  
+
+</hibernate-mapping>
